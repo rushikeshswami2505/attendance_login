@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ScheduledTask -TaskName \"AttendanceSignInMorning\")",
+      "PowerShell(Get-ScheduledTaskInfo)",
+      "PowerShell(Get-ScheduledTask -TaskName \"AttendanceSignInAfternoon\")",
+      "PowerShell(\\(Get-ScheduledTask -TaskName \"AttendanceSignInMorning\"\\).Triggers; Write-Host \"---AFTERNOON---\"; \\(Get-ScheduledTask -TaskName \"AttendanceSignInAfternoon\"\\).Triggers)",
+      "PowerShell(\\(Get-ScheduledTask -TaskName \"AttendanceSignInMorning\"\\).Actions)",
+      "PowerShell($now = Get-Date; $testTime = $now.AddMinutes\\(1\\); $timeStr = $testTime.ToString\\(\"HH:mm\"\\); Write-Host \"Current time: $\\($now.ToString\\('HH:mm:ss'\\)\\)\"; Write-Host \"Test scheduled for: $timeStr\")",
+      "PowerShell(schtasks /query /tn \"AttendanceSignInMorning\" /xml)",
+      "PowerShell(schtasks /create /tn \"AttendanceTestRun\" /xml \"C:\\\\attendance_info\\\\test_task.xml\" /f)",
+      "PowerShell(schtasks /query /tn \"AttendanceTestRun\" /fo LIST)",
+      "PowerShell(schtasks /query /fo LIST /tn \"AttendanceSignInMorning\")",
+      "PowerShell(schtasks /query /fo LIST /tn \"AttendanceSignInAfternoon\")"
+    ]
+  }
+}
