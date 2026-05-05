@@ -48,11 +48,10 @@ Open **PowerShell as Administrator** and run the block below.
 Open **PowerShell as Administrator**, replace the path, and run:
 
 ```powershell
-$Action   = New-ScheduledTaskAction -Execute "C:\Users\yourname\attendance_login\attendance.exe"
-$Settings = New-ScheduledTaskSettingsSet -DisallowStartIfOnBatteries $false -StopIfGoingOnBatteries $false
+$Action = New-ScheduledTaskAction -Execute "C:\Users\yourname\attendance_login\attendance.exe"
 
-Register-ScheduledTask -TaskName "AttendanceMorning"   -Action $Action -Trigger (New-ScheduledTaskTrigger -Daily -At 11am) -Settings $Settings -Force
-Register-ScheduledTask -TaskName "AttendanceAfternoon" -Action $Action -Trigger (New-ScheduledTaskTrigger -Daily -At 3pm)  -Settings $Settings -Force
+Register-ScheduledTask -TaskName "AttendanceMorning"   -Action $Action -Trigger (New-ScheduledTaskTrigger -Daily -At 11am) -Force
+Register-ScheduledTask -TaskName "AttendanceAfternoon" -Action $Action -Trigger (New-ScheduledTaskTrigger -Daily -At 3pm)  -Force
 ```
 
 > Run this once. It creates both tasks. If you need to update the path later, run it again — `-Force` will overwrite.
