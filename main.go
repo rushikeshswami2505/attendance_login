@@ -140,10 +140,10 @@ func main() {
 		
 		// Wait for landing page or error
 		chromedp.ActionFunc(func(ctx context.Context) error {
-			fmt.Println("Login click dispatched. Waiting for dashboard (up to 40s)...")
+			fmt.Println("Login click dispatched. Waiting for dashboard (up to 60s)...")
 			
 			// Create a sub-context with a shorter timeout for this specific wait
-			waitCtx, cancel := context.WithTimeout(ctx, 40*time.Second)
+			waitCtx, cancel := context.WithTimeout(ctx, 60*time.Second)
 			defer cancel()
 			
 			// Wait for either the home link OR a known error message

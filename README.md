@@ -11,15 +11,17 @@ Automates daily attendance sign-in on Greythr using headless Chrome. Skips weeke
 
 ## Setup (any machine, any location)
 
-### 1. Place the exe
+### 1. Build the exe
 
-Copy `attendance.exe` to any folder on your machine. Example:
+```powershell
+go build -o attendance.exe .\main.go
+```
+
+Copy the generated `attendance.exe` to any folder on your machine. Example:
 
 ```
 C:\Users\yourname\attendance_login\attendance.exe
 ```
-
-> You can put it anywhere — just use that path consistently in Step 3.
 
 ---
 
@@ -42,9 +44,6 @@ CHROME_PATH="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 
 ### 3. Create Scheduled Tasks (11:00 AM and 3:00 PM)
 
-Open **PowerShell as Administrator** and run the block below.
-**Change the first line to your actual exe path.**
-
 Open **PowerShell as Administrator**, replace the path, and run:
 
 ```powershell
@@ -54,14 +53,14 @@ Register-ScheduledTask -TaskName "AttendanceMorning"   -Action $Action -Trigger 
 Register-ScheduledTask -TaskName "AttendanceAfternoon" -Action $Action -Trigger (New-ScheduledTaskTrigger -Daily -At 3pm)  -Force
 ```
 
-> Run this once. It creates both tasks. If you need to update the path later, run it again — `-Force` will overwrite.
+> `-Force` overwrites safely if the task already exists.
 
 ---
 
 ### 4. Test immediately
 
 ```powershell
-Start-ScheduledTask -TaskName "AttendanceSignInMorning"
+Start-ScheduledTask -TaskName "AttendanceMorning"
 ```
 
 Then check the log:
@@ -78,24 +77,14 @@ C:\attendance_info\screenshots\
 
 ---
 
-## Build from source
-
-If you want to build the exe yourself:
-
-```powershell
-go build -o attendance.exe .\main.go
-```
-
----
-
 ## Troubleshooting
 
 | Symptom | Fix |
 |---------|-----|
-| No log entry, task exits with code 1 | Exe path in the task is wrong — re-run Step 3 with the correct `$exePath` |
+| No log entry, task exits with code 1 | Exe path in the task is wrong — re-run Step 3 with the correct path |
 | Login fails | Check credentials in `.env` |
 | Chrome not found | Update `CHROME_PATH` in `.env` |
 | Want to see the browser | Set `HEADLESS=false` in `.env` |
 | Need to sign in on a weekend | Set `FORCE_SIGNIN=true` in `.env` |
 
-To manage tasks: open **Task Scheduler** → Task Scheduler Library → look for `AttendanceSignIn*`.
+To manage tasks: open **Task Scheduler** → Task Scheduler Library → look for `Attendance*`.
